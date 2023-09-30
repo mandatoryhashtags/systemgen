@@ -1,0 +1,237 @@
+extends default
+
+block header
+  header.header 
+    h1 #{title}
+  a.btn.btn-primary(href='/subsector') Return to Subsector List
+
+block content
+  div.row
+    div(class='col-md-16.system-details' id=`${system.name}`)
+      h2 #{system.name} System
+      h4.profile-coords
+        | Coordinates: #{system.column} #{system.row}
+      li.list-group-item 
+       span(style='font-weight: bold') Number of Stars: 
+       span #{system.numberOfStars}
+      li.list-group-item 
+       span(style='font-weight: bold') Star Type: #{system.primaryStarType}#{system.starProgress} #{system.starLuminosity} 
+       span #{system.starClassification}
+       div(id=`zone-index-${system.name}`)
+        br
+        h6(style='font-weight: bold;') Zone Index
+        each zone, index in system.zones
+         if zone != 0
+          ul
+           li 
+            a(href=`#${system.name}-${index}`) #{index.charAt(0).toUpperCase() + index.slice(1)} Zone
+      br
+      .zones 
+        each zone, index in system.zones
+         .row
+          div.col-md-16
+           - let zoneKey = index.charAt(0).toUpperCase() + index.slice(1);
+             br
+             each s in zone
+              if s != 0
+               div(class=`zone-${s.zone}` id=`${system.name}-${s.zone}`)
+                a(href=`#zone-index-${system.name}`) Index
+               div.zone(style='border: solid 2px black')
+                h4(style='font-weight: bold;') #{zoneKey} Orbit Zone in #{system.name} System
+                ul.list-group
+                 li.list-group-item 
+                  span(style='font-size: 16px; font-weight: bold') Type: 
+                  span(style='font-size: 16px; font-style: italic') #{s.type}
+                 ul.list-group
+                  if s.name != undefined
+                   li.list-group-item 
+                    span(style='font-weight: bold') Name: 
+                    span #{s.name}
+                  if s.gwp
+                   li.list-group-item 
+                    span(style='font-weight: bold') GWP: 
+                    span #{s.gwp}
+                  li.list-group-item 
+                   span(style='font-weight: bold') Distance: 
+                   span #{s.distance}
+                  if s.rings 
+                   li.list-group-item 
+                    span(style='font-weight: bold') Rings: 
+                    span #{s.rings}
+                  if s.details != undefined 
+                   each d, dindex in s.details
+                    li.list-group-item 
+                     span(style='font-weight: bold') #{dindex}
+                     span : #{d}
+                  if s.habitable
+                   li.list-group-item 
+                    span(style='font-weight: bold') Habitable: 
+                    span #{s.habitable} 
+                    li.list-group-item 
+                     span(style='font-weight: bold') Dominate Life Form: 
+                     span #{s.dominateLifeForm}
+                  if s.gravity
+                   li.list-group-item 
+                    span(style='font-weight: bold') Gravity: 
+                    span #{s.gravity}
+                  if s.mass
+                   li.list-group-item 
+                    span(style='font-weight: bold') Mass: 
+                    span #{s.mass}
+                  if s.diameter
+                   li.list-group-item 
+                    span(style='font-weight: bold') Diameter: 
+                    span #{s.diameter}
+                  if s.density
+                   li.list-group-item 
+                    span(style='font-weight: bold') Density: 
+                    span #{s.density}
+                  if s.atmosphericPressure
+                   li.list-group-item 
+                    span(style='font-weight: bold') Atmosphere: 
+                    span #{s.atmosphericPressure}
+                  if s.hydrosphere
+                   li.list-group-item 
+                    span(style='font-weight: bold') Hydrosphere: 
+                    span #{s.hydrosphere}%
+                  if s.hydrosphereComposition
+                   li.list-group-item 
+                    span(style='font-weight: bold') Hydrosphere Composition: 
+                    span #{s.hydrosphereComposition}
+                  if s.surfaceTemperature
+                   li.list-group-item 
+                    span(style='font-weight: bold') Surface Temperature: 
+                    span #{s.surfaceTemperature}
+                  if s.radiationLevel 
+                   li.list-group-item 
+                    span(style='font-weight: bold') Radiation Level: 
+                    span #{s.radiationLevel}
+                  if s.dominantTerrain 
+                   li.list-group-item 
+                    span(style='font-weight: bold') Dominant Terrain: 
+                    span #{s.dominantTerrain}  
+                  if s.lengthOfYear
+                   li.list-group-item 
+                    span(style='font-weight: bold') Orbital Period: 
+                    span #{s.lengthOfYear}
+                  if s.lengthOfDay
+                   li.list-group-item 
+                    span(style='font-weight: bold') Rotational Period: 
+                    span #{s.lengthOfDay}
+                  if s.axialTilt
+                   li.list-group-item 
+                    span(style='font-weight: bold') Axial Tilt: 
+                    span #{s.axialTilt}
+                  if s.feature
+                   li.list-group-item 
+                    span(style='font-weight: bold') Notable Features: 
+                    span #{s.feature} 
+                  if s.resources != "None" && s.resources != undefined
+                   ul.list-group-flush Resources:
+                    each r, rindex in s.resources
+                     li.list-group-item 
+                      span(style='font-weight: bold') #{rindex}
+                      span : #{r}
+                  if s.moons != undefined
+                   h5(style='font-weight:bold; font-size: 18px', id=`${system.name}-${s.zone}-moon-index`) Moons:
+                    each moon, index in s.moons
+                     a(href=`#${system.name}-moon-${index}`) Moon #{index} 
+                   ul.list-group
+                     each m, index in s.moons 
+                      div(class=`system-${system.name}-moon-${index}` id=`${system.name}-moon-${index}`)
+                       a(href=`#${system.name}-${m.zone}-moon-index`) Moon Index 
+                       a(href=`#zone-index-${system.name}`) Zone Index
+                      ul.list-group-flush 
+                       li.list-group-item(style='background-color:#d6d8db; border: dotted 1px black') 
+                        span(style='font-weight: bold; font-size: 16px') Moon #{index} 
+                        span of #{s.type} orbiting the #{s.zone} zone in #{system.name} System
+                        ul.list-group
+                         if m.name != undefined
+                          li.list-group-item
+                             span(style='font-weight: bold') Name: 
+                             span(style='font-style: italic') #{m.name}
+                         li.list-group-item 
+                          span(style='font-weight: bold') Size: 
+                          span #{m.size}
+                         li.list-group-item 
+                          span(style='font-weight: bold') Zone: 
+                          span #{m.zone}
+                         if m.gwp
+                          li.list-group-item 
+                           span(style='font-weight: bold') GWP: 
+                           span #{m.gwp}
+                         if m.rings 
+                          li.list-group-item 
+                           span(style='font-weight: bold') Rings: 
+                           span #{m.rings}
+                         if m.habitable
+                          li.list-group-item 
+                           span(style='font-weight: bold') Habitable: 
+                           span #{m.habitable} 
+                           li.list-group-item 
+                            span(style='font-weight: bold') Dominate Life Form: 
+                            span #{m.dominateLifeForm}
+                         if m.gravity
+                          li.list-group-item 
+                           span(style='font-weight: bold') Gravity: 
+                           span #{m.gravity}
+                         if m.mass
+                          li.list-group-item 
+                           span(style='font-weight: bold') Mass: 
+                           span #{m.mass}
+                         if m.diameter
+                          li.list-group-item 
+                           span(style='font-weight: bold') Diameter: 
+                           span #{m.diameter}
+                         if m.density
+                          li.list-group-item 
+                           span(style='font-weight: bold') Density: 
+                           span #{m.density}
+                         if m.atmosphericPressure
+                          li.list-group-item 
+                           span(style='font-weight: bold') Atmosphere: 
+                           span #{m.atmosphericPressure}
+                         if m.hydrosphere
+                          li.list-group-item 
+                           span(style='font-weight: bold') Hydrosphere: 
+                           span #{s.hydrosphere}%
+                         if m.hydrosphereComposition
+                          li.list-group-item 
+                           span(style='font-weight: bold') Hydrosphere Composition: 
+                           span #{m.hydrosphereComposition}
+                         if m.surfaceTemperature
+                          li.list-group-item 
+                           span(style='font-weight: bold') Surface Temperature: 
+                           span #{m.surfaceTemperature}
+                         if m.radiationLevel 
+                          li.list-group-item 
+                           span(style='font-weight: bold') Radiation Level: 
+                           span #{m.radiationLevel}
+                         if m.dominantTerrain 
+                          li.list-group-item 
+                           span(style='font-weight: bold') Dominant Terrain: 
+                           span #{m.dominantTerrain}  
+                         if m.lengthOfYear
+                          li.list-group-item 
+                           span(style='font-weight: bold') Orbital Period: 
+                           span #{m.lengthOfYear}
+                         if m.lengthOfDay
+                          li.list-group-item 
+                           span(style='font-weight: bold') Rotational Period: 
+                           span #{m.lengthOfDay}
+                         if m.axialTilt
+                          li.list-group-item 
+                           span(style='font-weight: bold') Axial Tilt: 
+                           span #{m.axialTilt}
+                         if m.feature
+                          li.list-group-item 
+                           span(style='font-weight: bold') Notable Features: 
+                           span #{m.feature} 
+                         if m.resources != "None" && m.resources != undefined
+                          ul.list-group-flush Resources:
+                           each mr, mrindex in m.resources
+                            li.list-group-item 
+                             span(style='font-weight: bold') #{mrindex}
+                             span : #{mr}
+              else
+                 

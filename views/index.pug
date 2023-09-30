@@ -1,0 +1,11 @@
+extends default
+
+block content
+  div.container
+   .row 
+    .col-md-16 
+     form(action='/generateSubsector', method='POST')
+      p
+        | Subsector Name: 
+        input(type='text', name='subsector', value='')
+      input(type='submit', value='Submit')

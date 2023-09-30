@@ -1,0 +1,28 @@
+POST http://localhost:3000/api/postTest HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Curtis",
+    "age": "39"
+}
+
+###
+
+GET http://localhost:3000/api/getAll
+
+###
+
+GET http://localhost:3000/api/getOne/1
+
+###
+
+POST http://localhost:3000/api/postStarSystem HTTP/1.1
+content-type: application/json
+
+{
+    "domain": "T",
+    "sector": "T",
+    "subsector":"T",
+    "column":"00",
+    "row":"00"
+}

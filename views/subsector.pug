@@ -1,0 +1,9 @@
+extends default 
+
+block content 
+  .container 
+     .col-md-16
+      each system in subsector 
+        .row
+         a(href=`/system?id=${system._id}`)
+            | #{system.name} #{system.column}#{system.row} #{system.gsp}

@@ -3819,6 +3819,11 @@ function generateStarportCode(populationCode) {
     if (roll >= 11) {
         starportCode = "A";
     }
+
+    if (starportCode == '') {
+        starportCode = 'X';
+        console.log("ERROR: Starport Code not found. Defaulting to X");
+    }
     return starportCode;
 }
 

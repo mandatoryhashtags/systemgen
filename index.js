@@ -35,7 +35,7 @@ app.use('/api', routes);
 
 //root
 app.get('/', (req, res) => {
-    res.render('index', {title: 'StarGen', name: 'StarGen', people: people.profiles});
+    res.render('subsector', {title: 'Subsector', subsector: subsector});
 });
 
 //profile

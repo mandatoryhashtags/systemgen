@@ -35,7 +35,7 @@ app.use('/api', routes);
 
 //root
 app.get('/', (req, res) => {
-    res.render('subsector', {title: 'Subsector', subsector: subsector});
+    res.render('subsector_print', {title: 'Complete Subsector', subsector: subsector});
 });
 
 //profile

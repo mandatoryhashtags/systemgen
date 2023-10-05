@@ -1,6 +1,7 @@
 const TestModel = require('../models/test');
 const StarSystem = require('../models/StarSystem');
 const jsonToTsv = require('../models/convertJSONToTSV');
+const StarShip = require('../models/StarShip');
 
 const express = require('express');
 const router = express.Router()
@@ -16,6 +17,32 @@ router.post('/postTest', async (req, res) => {
         const dataToSave = await data.save();
         res.status(200).json(dataToSave);
 
+    }catch(error) {
+        res.status(400).json({message: error.message});
+    }
+});
+
+
+router.get('/getStarSystem', async (req, res) => {
+    let column = randomNumber(1,8).toFixed(0);
+    let row =  randomNumber(1,10).toFixed(0);
+    let name = randomSystemName();
+
+    const data = new StarSystem({
+        subsector: name,
+        column: column,
+        row: row,
+    });
+
+    data.gsp =  data.subsector +
+        " " + data.column+data.row + 
+        " " + data.numberOfStars.toString() + data.primaryStarType + data.starProgress + data.starLuminosity + data.starMass +
+        " " + data.zoneNear + data.zoneInner + data.zoneHabitable + data.zoneOuter1 + data.zoneOuter2 + data.zoneOuter3 + data.zoneFar1 +
+        data.zoneFar2 + data.zoneFar3 + data.zoneFar4;
+
+    try {
+        //const dataToSave = await data.save();
+        res.status(200).json(data);
     }catch(error) {
         res.status(400).json({message: error.message});
     }
@@ -136,6 +163,25 @@ router.post('/generateSubsector', async (req, res) => {
     
     try {
         res.status(200).json(subsector);
+
+    }catch(error) {
+        res.status(400).json({message: error.message});
+    }
+});
+
+router.post('/buildShip', async (req, res) => {
+    //const ship = new BuildAShip(req.body);
+    const ship = new StarShip({
+        strength: req.body.strength,
+        dexterity: req.body.dexterity,
+        constitution: req.body.constitution,
+        intelligence: req.body.intelligence,
+        wisdom: req.body.wisdom,
+        charisma: req.body.charisma,
+        sizeSelected: req.body.sizeSelected,
+    })
+    try {
+        res.status(200).json(ship);
 
     }catch(error) {
         res.status(400).json({message: error.message});

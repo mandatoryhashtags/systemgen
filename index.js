@@ -70,6 +70,21 @@ app.get('/subsector_print/', (req, res) => {
     res.render('subsector_print', {title: 'Complete Subsector', subsector: subsector});
 });
 
+//test gen system
+app.get('/getSystem/',async (req, res) => {
+    try {
+        // Make a GET request to your own API (assuming it's running on a different server)
+        const response = await fetch('http://localhost:3000/api/getStarSystem');
+        const systemData = await response.json();
+    
+        // Render the Pug template and pass the systemData as a variable
+        res.render('system', { system: systemData });
+      } catch (error) {
+        console.error('Error fetching star system data:', error);
+        res.status(500).send('Error fetching star system data');
+      }
+});
+
 app.listen(port, () => {
     console.log(`Server Started at ${port}`)
 });

@@ -3795,6 +3795,11 @@ function generateLawLevelCode(governmentCode) {
 function generateStarportCode(populationCode) {
     let roll = rollADice(2,12);
     roll = roll -7;
+
+    if (populationCode === "A") {
+        populationCode = 10;
+    }
+
     if (roll < 0) {
         roll = 0;
     }
@@ -3822,7 +3827,7 @@ function generateStarportCode(populationCode) {
 
     if (starportCode == '') {
         starportCode = 'X';
-        console.log("ERROR: Starport Code not found. Defaulting to X");
+        console.log("ERROR: Starport Code (pop code: "+populationCode+" roll: "+roll+") not found. Defaulting to X");
     }
     return starportCode;
 }
@@ -4083,6 +4088,15 @@ function generateOrbitalStarbasesCode(starportCode, techLevelCode) {
  */
 function generateTradeCodes(worldSize, atmosphereCode, hydrographicCode, populationCode, governmentCode, lawCode, techLevelCode) {
     let tradeCodes = {};
+
+    //convert codes to letters if needed
+    atmosphereCode = convertLetters(atmosphereCode);
+    hydrographicCode = convertLetters(hydrographicCode);
+    populationCode = convertLetters(populationCode);
+    governmentCode = convertLetters(governmentCode);
+    lawCode = convertLetters(lawCode);
+    techLevelCode = convertLetters(techLevelCode);
+
 
     // Vacuum
     if (atmosphereCode == "0") {
@@ -5121,6 +5135,185 @@ const systemFeatures = {
     100: "Precursor Artifact",
 };
 
+
+function convertNumbers(code) {
+    //check if code is an integer
+    if (code * 10 != NaN) {
+        return code
+    }
+
+    //convert alpha code to number
+    if (code === "A") {
+        code = 10;
+    }
+    if (code === "B") {
+        code = 11;
+    }
+    if (code === "C") {
+        code = 12;
+    }
+    if (code === "D") {
+        code = 13;
+    }
+    if (code === "E") {
+        code = 14;
+    }
+    if (code === "F") {
+        code = 15;
+    }
+    if (code === "G") {
+        code = 16;
+    }
+    if (code === "H") {
+        code = 17;
+    }
+    if (code === "I") {
+        code = 18;
+    }
+    if (code === "J") {
+        code = 19;
+    }
+    if (code === "K") {
+        code = 20;
+    }
+    if (code === "L") {
+        code = 21;
+    }
+    if (code === "M") {
+        code = 22;
+    }
+    if (code === "N") {
+        code = 23;
+    }
+    if (code === "O") {
+        code = 24;
+    }
+    if (code === "P") {
+        code = 25;
+    }
+    if (code === "Q") {
+        code = 26;
+    }
+    if (code === "R") {
+        code = 27;
+    }
+    if (code === "S") {
+        code = 28;
+    }
+    if (code === "T") {
+        code = 29;
+    }
+    if (code === "U") {
+        code = 30;
+    }
+    if (code === "V") {
+        code = 31;
+    }
+    if (code === "W") {
+        code = 32;
+    }
+    if (code === "X") {
+        code = 33;
+    }
+    if (code === "Y") {
+        code = 34;
+    }
+    if (code === "Z") {
+        code = 35;
+    }
+    return code;
+
+}
+
+function convertLetters(code) {
+    //if its already a letter we don't need to do anything
+    if (code < 10) {
+        return code
+    }
+    if (code * 10 == NaN) {
+        return code
+    }
+
+    if (code === 10) {
+        code = "A";
+    }
+    if (code === 11) {
+        code = "B";
+    }
+    if (code === 12) {
+        code = "C";
+    }
+    if (code === 13) {
+        code = "D";
+    }
+    if (code === 14) {
+        code = "E";
+    }
+    if (code === 15) {
+        code = "F";
+    }
+    if (code === 16) {
+        code = "G";
+    }
+    if (code === 17) {
+        code = "H";
+    }
+    if (code === 18) {
+        code = "I";
+    }
+    if (code === 19) {
+        code = "J";
+    }
+    if (code === 20) {
+        code = "K";
+    }
+    if (code === 21) {
+        code = "L";
+    }
+    if (code === 22) {
+        code = "M";
+    }
+    if (code === 23) {
+        code = "N";
+    }
+    if (code === 24) {
+        code = "O";
+    }
+    if (code === 25) {
+        code = "P";
+    }
+    if (code === 26) {
+        code = "Q";
+    }
+    if (code === 27) {
+        code = "R";
+    }
+    if (code === 28) {
+        code = "S";
+    }
+    if (code === 29) {
+        code = "T";
+    }
+    if (code === 30) {
+        code = "U";
+    }
+    if (code === 31) {
+        code = "V";
+    }
+    if (code === 32) {
+        code = "W";
+    }
+    if (code === 33) {
+        code = "X";
+    }
+    if (code === 34) {
+        code = "Y";
+    }
+    if (code === 35) {
+        code = "Z";
+    }
+    return code;
+}
   
 
 module.exports = mongoose.model('StarSystem', starSystemSchema);
